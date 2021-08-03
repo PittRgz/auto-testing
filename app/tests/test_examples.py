@@ -21,6 +21,6 @@ def test_strings_equal():
 def test_multiplication():
     """Testing multiplication of two numbers"""
     val_1 = 4
-    val_2 = 3
-    res = 12
-    assert val_1 + val_2 == res
+    val_2 = 5
+    res = 20
+    assert val_1 * val_2 == res
