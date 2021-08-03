@@ -9,18 +9,15 @@ services:
 
 # Stages of the Jobs in the Travis CI run
 stages:
-  # - build
   - lint
   - test
+
+before_script:
+  - docker-compose up
 
 # Jobs that Travis will run on each Pull Request
 jobs:
   include:
-    # - stage: build
-    #   name: install docker-compose
-    #   script:
-    #     - pip install docker-compose
-
     - stage: lint
       name: run pylint
       script:
