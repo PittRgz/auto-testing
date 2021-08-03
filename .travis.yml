@@ -12,9 +12,6 @@ stages:
   - lint
   - test
 
-before_script:
-  - docker-compose up
-
 # Jobs that Travis will run on each Pull Request
 jobs:
   include:
