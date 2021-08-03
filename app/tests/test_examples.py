@@ -16,3 +16,11 @@ def test_strings_equal():
     string_1 = 'string'
     string_2 = 'string'
     assert string_1 == string_2
+
+
+def test_multiplication():
+    """Testing multiplication of two numbers"""
+    val_1 = 4
+    val_2 = 3
+    res = 12
+    assert val_1 + val_2 == res
