@@ -1,0 +1,49 @@
+# Language and its version
+language: python
+python:
+  - "3.9"
+
+# Needed services, in this case Docker
+services:
+  - docker
+
+# Stages of the Jobs in the Travis CI run
+stages:
+  - build
+  - lint
+  - test
+
+# Execute this line before executing any script, we need Docker!
+before_script:
+  - pip install docker-compose
+
+# Jobs that Travis will run on each Pull Request
+jobs:
+  include:
+    - stage: build
+      name: build docker image
+      script:
+        - docker-compose build test
+        - docker images
+        - docker-compose push test
+
+    - stage: lint
+      name: run pylint
+      script:
+        - docker-compose pull test
+        - docker images
+        - docker-compose run --no-deps test pylint app tests
+
+    - stage: lint
+      name: run flake8
+      script:
+        - docker-compose pull test
+        - docker images
+        - docker-compose run --no-deps test flake8 app tests
+
+    - stage: test
+      name: run pytest
+      script:
+        - docker-compose pull test
+        - docker images
+        - docker-compose run test pytest tests --durations=10 --cov=app --cov-report=term
