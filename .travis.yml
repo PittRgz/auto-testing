@@ -7,15 +7,44 @@ python:
 services:
   - docker
 
-# Execute this line before executing any script, we need Docker!
-before_script:
-  - pip install docker-compose
+# Stages of the Jobs in the Travis CI run
+stages:
+  - build
+  - lint
+  - test
 
-# Scripts that Travis will run on each Pull Request
-script:
-  # Run PyLint tests inside "/app/tests"
-  - docker-compose run --no-deps app pylint tests
-  # Run Flake8 tests inside "/app/tests"
-  - docker-compose run --no-deps app flake8 tests
-  # Run PyTests tests inside "/app/tests"
-  - docker-compose run app pytest tests
+# # Execute this line before executing any script, we need Docker!
+# before_script:
+#   - pip install docker-compose
+
+# # Scripts that Travis will run on each Pull Request
+# script:
+#   # Run PyLint tests inside "/app/tests"
+#   - docker-compose run --no-deps app pylint tests
+#   # Run Flake8 tests inside "/app/tests"
+#   - docker-compose run --no-deps app flake8 tests
+#   # Run PyTests tests inside "/app/tests"
+#   - docker-compose run app pytest tests
+
+# Jobs that Travis will run on each Pull Request
+jobs:
+  include:
+    - stage: build
+      name: install docker-compose
+      script:
+        - pip install docker-compose
+
+    - stage: lint
+      name: run pylint
+      script:
+        - docker-compose run --no-deps app pylint tests
+
+    - stage: lint
+      name: run flake8
+      script:
+        - docker-compose run --no-deps app flake8 tests
+
+    - stage: test
+      name: run pytest
+      script:
+        - docker-compose run app pytest tests
