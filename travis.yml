@@ -18,4 +18,4 @@ script:
   # Run Flake8 tests inside "/app/tests"
   - docker-compose run --no-deps app flake8 tests
   # Run PyTests tests inside "/app/tests"
-  - docker-compose run app pytest tests --durations=10 --cov=app --cov-report=term
+  - docker-compose run app pytest tests
