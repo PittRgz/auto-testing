@@ -23,4 +23,4 @@ def test_multiplication():
     val_1 = 4
     val_2 = 3
     res = 12
-    assert val_1 + val_2 == res
+    assert val_1 * val_2 == res
